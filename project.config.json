@@ -12,13 +12,13 @@
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
-		"nodeModules": true,
+		"nodeModules": false,
 		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
 		"uglifyFileName": true,
 		"checkInvalidKey": true,
-		"checkSiteMap": true,
+		"checkSiteMap": false,
 		"uploadWithSourceMap": true,
 		"babelSetting": {
 			"ignore": [],
@@ -29,9 +29,9 @@
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.7",
+	"libVersion": "2.11.3",
 	"appid": "wx7bc2e390cc1a7240",
-	"projectname": "zulin",
+	"projectname": "water_shop_zs",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -80,6 +80,13 @@
 					"id": -1,
 					"name": "pages/user/user",
 					"pathName": "pages/user/user",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/goods_details/goods_details",
+					"pathName": "pages/index/indexgoods_details",
 					"scene": null
 				}
 			]

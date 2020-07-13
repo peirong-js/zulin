@@ -85,7 +85,7 @@ Page({
    * 申请退货
   */
   subRefund:function(e){
-    var that = this, formId = e.detail.formId, value = e.detail.value;
+    var that = this, value = e.detail.value;
     //收集form表单
     // if (!value.refund_reason_wap_explain) return app.Tips({title:'请输入退款原因'});
     setFormId(formId);

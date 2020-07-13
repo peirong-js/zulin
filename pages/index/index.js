@@ -1,8 +1,10 @@
 const app = getApp();
 
-import { getIndexData, getCoupons } from '../../api/api.js';
+import { getIndexData, getCoupons, getTemlIds, getLiveList} from '../../api/api.js';
+import { CACHE_SUBSCRIBE_MESSAGE } from '../../config.js';
 import Util from '../../utils/util.js';
 import { getGroomList } from '../../api/store.js';
+import wxh from '../../utils/wxh.js';
 // 引入SDK核心类
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
 var qqmapsdk;
@@ -39,7 +41,12 @@ Page({
     window: false,
     iShidden:false,
     navH: "",
-    /* is_switch:true, */
+    newGoodsBananr:'',
+    selfLongitude: '',
+    selfLatitude: '',
+    liveList: [],
+    liveInfo:{},
+    address:''
   },
   closeTip:function(){
     wx.setStorageSync('msg_key',true);
@@ -56,21 +63,55 @@ Page({
       key: '6OZBZ-FE5KU-PKCVY-4QQXM-PATM2-OBBTS'
     });
     this.get_location();
+    wxh.selfLocation(1);
     this.setData({
       navH: app.globalData.navHeight
     });
     if (options.spid) app.globalData.spid = options.spid;
     if (options.scene) app.globalData.code = decodeURIComponent(options.scene);
     if (wx.getStorageSync('msg_key')) this.setData({ iShidden:true});
+    this.getTemlIds();
+    this.getLiveList();
   },
+  getLiveList:function(){
+    getLiveList(1,20).then(res=>{
+      if(res.data.length == 1){
+        this.setData({liveInfo:res.data[0]});
+      }else{
+        this.setData({liveList:res.data});
+      }
+    }).catch(res=>{
 
-  /* Changswitch:function(){
-    var that = this;
-    that.setData({
-      is_switch: !this.data.is_switch
     })
- }, */
- 
+  },
+  /**
+   * 商品详情跳转
+   */
+  goDetail: function (e) {
+    let item = e.currentTarget.dataset.items
+    if (item.activity && item.activity.type === "1") {
+      wx.navigateTo({
+        url: `/pages/activity/goods_seckill_details/index?id=${item.activity.id}&time=${item.activity.time}&status=1`
+      });
+    } else if (item.activity && item.activity.type === "2") {
+      wx.navigateTo({ url: `/pages/activity/goods_bargain_details/index?id=${item.activity.id}` });
+    } else if (item.activity && item.activity.type === "3") {
+      wx.navigateTo({
+        url: `/pages/activity/goods_combination_details/index?id=${item.activity.id}`
+      });
+    } else {
+      wx.navigateTo({ url: `/pages/goods_details/index?id=${item.id}` });
+    }
+  },
+  getTemlIds(){
+    let messageTmplIds = wx.getStorageSync(CACHE_SUBSCRIBE_MESSAGE);
+    if (!messageTmplIds){
+      getTemlIds().then(res=>{
+        if (res.data) 
+          wx.setStorageSync(CACHE_SUBSCRIBE_MESSAGE, JSON.stringify(res.data));
+      })
+    }
+  },
   catchTouchMove: function (res) {
     return false
   },
@@ -174,6 +215,7 @@ Page({
         benefit: res.data.benefit,
         /* logoUrl: "广东省东莞市", */
         couponList: res.data.couponList,
+        newGoodsBananr: res.data.newGoodsBananr
       });
       /* console.log(res.data.info.bastList); */
       wx.getSetting({
@@ -209,6 +251,7 @@ Page({
             }) */
             /* console.log(address.result) */
             /* let local_address = address.result.address_reference.town.title || address.result.address_reference.street.title || address.result.address_component.city ||address.result.address || "定位失败"; */
+            /* console.log(address) */
             let local_address = address.result.address_reference.town.title;
             that.setData({
               address:local_address,

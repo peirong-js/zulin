@@ -27,7 +27,9 @@ Component({
   },
   methods: {
     return:function(){
-      wx.navigateBack();
+      wx.navigateBack({
+        delta: 1
+      });
     },
     Setting: function () {
       wx.openSetting({
@@ -35,7 +37,11 @@ Component({
           console.log(res.authSetting)
         }
       });
-    }, 
+      // var pages = getCurrentPages();
+      // wx.navigateBack({
+      //   delta: pages.length-2
+      // });
+    },
     setGoodsSearch:function(){
        wx.navigateTo({
          url: '/pages/goods_search/index',

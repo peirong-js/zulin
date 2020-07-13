@@ -1,8 +1,9 @@
 
 import { getOrderDetail} from '../../api/order.js';
+import { openOrderSubscribe } from '../../utils/SubscribeMessage.js'
 import { setFormId } from '../../api/api.js';
 
-var app = getApp();
+const app = getApp();
 Page({
 
   /**
@@ -11,7 +12,7 @@ Page({
   data: {
     parameter: {
       'navbar': '1',
-      'return': '1',
+      'return': '0',
       'title': '支付成功'
     },
     orderId:'',
@@ -59,8 +60,17 @@ Page({
   {
     var formId = e.detail.formId;
     setFormId(formId);
-    wx.navigateTo({
-      url: '/pages/order_details/index?order_id=' + this.data.orderId
+    let that = this;
+    wx.showLoading({
+      title: '正在加载',
+    })
+    openOrderSubscribe().then(res => {
+      wx.hideLoading();
+      wx.navigateTo({
+        url: '/pages/order_details/index?order_id=' + that.data.orderId
+      });
+    }).catch(() => {
+      wx.hideLoading();
     });
   }
 

@@ -1,5 +1,4 @@
 import { getCategoryList} from '../../api/store.js';
-import { setFormId } from '../../api/api.js';
 
 const app = getApp();
 Page({
@@ -25,8 +24,8 @@ Page({
     this.getAllCategory();
   },
   infoScroll:function(){
-    var that = this;
-    var len = that.data.productList.length;
+    let that = this;
+    let len = that.data.productList.length;
     that.setData({
       navH: app.globalData.navHeight,
       number: that.data.productList[len - 1].children.length

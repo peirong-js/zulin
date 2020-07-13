@@ -9,7 +9,7 @@
     <view class='index-bg' wx:if="{{imgUrls.length}}">
         <swiper indicator-dots="true"
             autoplay="{{autoplay}}" circular="{{circular}}" interval="{{interval}}" duration="{{duration}}" indicator-color="rgba(255,255,255,0.6)" indicator-active-color="#fff">
-            <block wx:for="{{imgUrls}}" wx:key>
+            <block wx:for="{{imgUrls}}" wx:key='index'>
               <swiper-item>
                 <navigator url='{{item.url}}' class='slide-navigator acea-row row-between-wrapper' hover-class='none'>
                   <image src="{{item.pic}}" class="slide-image"/>
@@ -34,6 +34,7 @@
       <navigator class='item' url='/pages/user_money/index' hover-class='none'>
           <view class='pictrue'><image src='/images/fl.png'></image></view>
           <view>我的账户</view>
+          <!-- <view>{{address}}</view> -->
       </navigator>
       <navigator class='item' url='/pages/user_goods_collection/index' hover-class='none'>
           <view class='pictrue'><image src='/images/sc.png'></image></view>

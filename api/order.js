@@ -162,8 +162,8 @@ export function orderData(){
  * @param string price
  * 
 */
-export function getCouponsOrderPrice(price){
-  return request.get('coupons/order/'+price)
+export function getCouponsOrderPrice(price, data){
+  return request.get('coupons/order/' + price, data)
 }
 
 /**

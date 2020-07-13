@@ -1,6 +1,7 @@
 // pages/my-account/index.js
 
 import { getProductHot } from '../../api/store.js';
+import { openRechargeSubscribe } from '../../utils/SubscribeMessage.js';
 import { getUserInfo, userActivity } from '../../api/user.js';
 
 const app=getApp();
@@ -37,11 +38,27 @@ Page({
   onLoad: function (options) {
 
   },
+
+  openSubscribe:function(e){
+    let page = e.currentTarget.dataset.url;
+    wx.showLoading({
+      title: '正在加载',
+    })
+    openRechargeSubscribe().then(res => {
+      wx.hideLoading();
+      wx.navigateTo({
+        url: page,
+      });
+    }).catch(() => {
+      wx.hideLoading();
+    });
+  },
+
   /**
    * 获取用户详情
   */
   getUserInfo:function(){
-    var that=this;
+    let that = this;
     getUserInfo().then(res=>{
       that.setData({ 
         userInfo: res.data, 

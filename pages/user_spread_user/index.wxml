@@ -17,7 +17,7 @@
             </view>
         </view>
     </view>
-    <navigator hover-class='none' url='/pages/user_cash/index' class='bnt bg-color'>立即提现</navigator>
+    <view hover-class='none' data-url='/pages/user_cash/index' bindtap="openSubscribe" class='bnt bg-color'>立即提现</view>
     <view class='list acea-row row-between-wrapper'>
         <navigator  url='/pages/user_spread_code/index' hover-class="none" class='item acea-row row-center-wrapper row-column'>
             <text class='iconfont icon-erweima'></text>
@@ -29,7 +29,7 @@
         </navigator>
         <navigator url='/pages/user_spread_money/index?type=2' hover-class="none" class='item acea-row row-center-wrapper row-column'>
             <text class='iconfont icon-qiandai'></text>
-            <view>佣金明细</view>
+            <view>佣金记录</view>
         </navigator>
         <navigator url='/pages/promoter-order/index' hover-class="none" class='item acea-row row-center-wrapper row-column'>
             <text class='iconfont icon-dingdan'></text>

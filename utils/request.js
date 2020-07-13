@@ -21,10 +21,12 @@ export default function request(api, method, data, {noAuth = false, noVerify = f
       header: header,
       data: data || {},
       success: (res) => {
-        console.log(res)
+        /* console.log(res) */
         if (noVerify)
           reslove(res.data, res);
         else if (res.data.status == 200)
+          reslove(res.data, res);
+        else if (res.data.status == 402)
           reslove(res.data, res);
         else if ([410000, 410001, 410002].indexOf(res.data.status) !== -1) {
           util.logout()

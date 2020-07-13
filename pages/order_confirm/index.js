@@ -1,7 +1,8 @@
 import { orderConfirm, getCouponsOrderPrice, orderCreate, postOrderComputed} from '../../api/order.js';
 import { getAddressDefault, getAddressDetail } from '../../api/user.js';
-
-
+import { openPaySubscribe } from '../../utils/SubscribeMessage.js';
+import { storeListApi } from '../../api/store.js';
+import { CACHE_LONGITUDE, CACHE_LATITUDE } from '../../config.js';
 var app = getApp();
 const util = require('../../utils/util.js');
 Page({
@@ -50,7 +51,9 @@ Page({
     system_store:{},
     storePostage:0,
     contacts:'',
-    contactsTel:''
+    contactsTel:'',
+    mydata: {},
+    storeList: []
   },
   /**
    * 授权回调事件
@@ -72,6 +75,44 @@ Page({
       this.getaddressInfo();
       this.selectComponent('#address-window').getAddressList();
     }
+    let pages = getCurrentPages();
+    let currPage = pages[pages.length - 1]; //当前页面
+    if (currPage.data.storeItem){
+      let json = currPage.data.storeItem;
+      this.setData({
+        system_store: json,
+      });
+    }
+  },
+  /**
+  * 获取门店列表数据
+ */
+  getList: function () {
+    let longitude = wx.getStorageSync(CACHE_LONGITUDE); //经度
+    let latitude = wx.getStorageSync(CACHE_LATITUDE); //纬度
+    let data = {
+      latitude: latitude, //纬度
+      longitude: longitude, //经度
+      page: 1,
+      limit: 10
+    }
+    storeListApi(data).then(res => {
+      let list = res.data.list || [];
+      this.setData({
+        storeList: list,
+        system_store: list[0],
+      });
+    }).catch(err => {
+
+    })
+  },
+  /*
+ * 跳转门店列表
+ */
+  showStoreList: function () {
+    wx.navigateTo({
+      url: '/pages/goods_details_store/index?go=order'
+    })
   },
   computedPrice:function(){
     let shippingType = this.data.shippingType;
@@ -79,7 +120,8 @@ Page({
       addressId: this.data.addressId,
       useIntegral: this.data.useIntegral ? 1 : 0,
       couponId: this.data.couponId,
-      shipping_type: parseInt(shippingType) + 1
+      shipping_type: parseInt(shippingType) + 1,
+      payType: this.data.payType
     }).then(res=>{
       let result = res.data.result;
       if (result){
@@ -95,7 +137,13 @@ Page({
   },
   addressType:function(e){
     let index = e.currentTarget.dataset.index;
-    this.setData({shippingType: parseInt(index)});
+    if (this.data.storeList.length>0){
+      this.setData({ shippingType: parseInt(index) });
+    }else{
+      if(index==1){
+        return app.Tips({ title: '暂无门店信息，你无法选择到店自提' });
+      }
+    }
     this.computedPrice();
   },
   bindPickerChange: function (e) {
@@ -164,18 +212,20 @@ Page({
   OnChangeAddress:function(e){
     this.setData({ textareaStatus:true,addressId: e.detail,'address.address':false});
     this.getaddressInfo();
+    this.computedPrice();
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     if (!options.cartId) return app.Tips({ title:'请选择要购买的商品'},{tab:3,url:1});
+    // if (options.shippingType) this.setData({ shippingType: options.shippingType, storeIndex: options.storeIndex });
     this.setData({ 
       couponId: options.couponId || 0, 
       pinkId: options.pinkId ? parseInt(options.pinkId) : 0, 
       addressId: options.addressId || 0, 
       cartId: options.cartId,
-      is_address: options.is_address ? true : false,
+      is_address: options.is_address ? true : false
     });
   },
   bindHideKeyboard: function (e) {
@@ -199,7 +249,7 @@ Page({
         totalPrice: app.help().Add(parseFloat(res.data.priceGroup.totalPrice), parseFloat(res.data.priceGroup.storePostage)),
         seckillId: parseInt(res.data.seckill_id),
         usableCoupon: res.data.usableCoupon,
-        system_store: res.data.system_store,
+        // system_store: res.data.system_store,
         store_self_mention: res.data.store_self_mention
       });
       that.data.cartArr[1].title = '可用余额:' + res.data.userInfo.now_money;
@@ -207,6 +257,7 @@ Page({
       that.setData({ cartArr: that.data.cartArr, ChangePrice: that.data.totalPrice });
       that.getBargainId();
       that.getCouponList();
+      that.getList();
     }).catch(err=>{
       return app.Tips({ title: err }, { tab: 3, url: 1 });
     });
@@ -235,7 +286,8 @@ Page({
   */
   getCouponList:function(){
     var that=this;
-    getCouponsOrderPrice(this.data.totalPrice).then(res=>{
+    let data = { cartId: this.data.cartId}
+    getCouponsOrderPrice(this.data.totalPrice, data).then(res=>{
       that.setData({ 'coupon.list': res.data, openType: 1 });
     });
   },
@@ -263,7 +315,8 @@ Page({
       active: active,
       animated: true,
       payType: that.data.cartArr[active].value,
-    })
+    });
+    that.computedPrice();
     setTimeout(function () {
       that.car();
     }, 500);
@@ -323,57 +376,62 @@ Page({
       pinkId: that.data.pinkId,
       seckill_id: that.data.seckillId,
       mark: that.data.mark,
+      store_id: that.data.system_store ? that.data.system_store.id : 0,
       'from':'routine',
       shipping_type: app.help().Add(that.data.shippingType,1)
     };
     if (data.payType == 'yue' && parseFloat(that.data.userInfo.now_money) < parseFloat(that.data.totalPrice)) return app.Tips({title:'余额不足！'});
     wx.showLoading({ title: '订单支付中'});
-    orderCreate(this.data.orderKey ,data).then(res=>{
-      var status = res.data.status, orderId = res.data.result.orderId, jsConfig = res.data.result.jsConfig,
-        goPages = '/pages/order_pay_status/index?order_id=' + orderId + '&msg=' + res.msg;
-      switch (status) {
-        case 'ORDER_EXIST': case 'EXTEND_ORDER': case 'PAY_ERROR':
-          wx.hideLoading();
-          return app.Tips({ title: res.msg }, { tab: 5, url: goPages });
-          break;
-        case 'SUCCESS':
-          wx.hideLoading();
-          if (that.data.BargainId || that.data.combinationId || that.data.pinkId || that.data.seckillId) return app.Tips({ title: res.msg, icon: 'success' }, { tab: 4, url: goPages });
-          return app.Tips({ title: res.msg, icon: 'success' }, { tab: 5, url: goPages });
-          break;
-        case 'WECHAT_PAY':
-          that.setData({ toPay: true });
-          wx.requestPayment({
-            timeStamp: jsConfig.timestamp,
-            nonceStr: jsConfig.nonceStr,
-            package: jsConfig.package,
-            signType: jsConfig.signType,
-            paySign: jsConfig.paySign,
-            success: function (res) {
-              wx.hideLoading();
-              if (that.data.BargainId || that.data.combinationId || that.data.pinkId || that.data.seckillId) return app.Tips({ title: '支付成功', icon: 'success' }, { tab: 4, url: goPages });
-              return app.Tips({ title: '支付成功', icon: 'success' }, { tab: 5, url: goPages });
-            },
-            fail: function (e) {
-              wx.hideLoading();
-              return app.Tips({ title: '取消支付' }, { tab: 5, url: goPages + '&status=2' });
-            },
-            complete: function (e) {
-              wx.hideLoading();
-              //关闭当前页面跳转至订单状态
-              if (res.errMsg == 'requestPayment:cancel') return app.Tips({ title: '取消支付' }, { tab: 5, url: goPages + '&status=2' });
-            },
-          })
-          break;
-        case 'PAY_DEFICIENCY':
-          wx.hideLoading();
-          //余额不足
-          return app.Tips({ title: res.msg }, { tab: 5, url: goPages + '&status=1' });
-          break;
-      }
-    }).catch(err=>{
-      wx.hideLoading();
-      return app.Tips({title:err});
+    openPaySubscribe().then(()=>{
+      orderCreate(this.data.orderKey ,data).then(res=>{
+        var status = res.data.status, orderId = res.data.result.orderId, jsConfig = res.data.result.jsConfig,
+          goPages = '/pages/order_pay_status/index?order_id=' + orderId + '&msg=' + res.msg;
+        switch (status) {
+          case 'ORDER_EXIST': case 'EXTEND_ORDER': case 'PAY_ERROR':
+            wx.hideLoading();
+            return app.Tips({ title: res.msg }, { tab: 5, url: goPages });
+            break;
+          case 'SUCCESS':
+            wx.hideLoading();
+            if (that.data.BargainId || that.data.combinationId || that.data.pinkId || that.data.seckillId) 
+              return app.Tips({ title: res.msg, icon: 'success' }, { tab: 4, url: goPages });
+            return app.Tips({ title: res.msg, icon: 'success' }, { tab: 5, url: goPages });
+            break;
+          case 'WECHAT_PAY':
+            that.setData({ toPay: true });
+            wx.requestPayment({
+              timeStamp: jsConfig.timestamp,
+              nonceStr: jsConfig.nonceStr,
+              package: jsConfig.package,
+              signType: jsConfig.signType,
+              paySign: jsConfig.paySign,
+              success: function (res) {
+                wx.hideLoading();
+                if (that.data.BargainId || that.data.combinationId || that.data.pinkId || that.data.seckillId) 
+                  return app.Tips({ title: '支付成功', icon: 'success' }, { tab: 4, url: goPages });
+                return app.Tips({ title: '支付成功', icon: 'success' }, { tab: 5, url: goPages });
+              },
+              fail: function (e) {
+                wx.hideLoading();
+                return app.Tips({ title: '取消支付' }, { tab: 5, url: goPages + '&status=2' });
+              },
+              complete: function (e) {
+                wx.hideLoading();
+                //关闭当前页面跳转至订单状态
+                if (res.errMsg == 'requestPayment:cancel') return app.Tips({ title: '取消支付' }, { tab: 5, url: goPages + '&status=2' });
+              },
+            })
+            break;
+          case 'PAY_DEFICIENCY':
+            wx.hideLoading();
+            //余额不足
+            return app.Tips({ title: res.msg }, { tab: 5, url: goPages + '&status=1' });
+            break;
+        }
+      }).catch(err=>{
+        wx.hideLoading();
+        return app.Tips({title:err});
+      });
     });
   }
 })

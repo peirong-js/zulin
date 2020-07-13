@@ -7,7 +7,7 @@
         <view
           class="item acea-row row-between-wrapper {{item.uid === userInfo.uid ? 'on' : ''}}"
           wx:for="{{switchUserInfo}}" 
-          wx:key
+          wx:key='index'
           bindtap='switchAccounts'
           data-index='{{index}}'
         >
@@ -23,7 +23,7 @@
               <view class="name line1">{{ item.nickname }}</view>
               <view class="phone" wx:if="{{item.phone && item.user_type !='h5' }}">绑定手机号：{{ item.phone }}</view>
               <view class="phone" wx:elif="{{item.phone && item.user_type =='h5' }}">账号：{{ item.phone }}</view>
-              <view class="phone" wx:else></view>
+              <view class="phone" wx:else>暂未绑定手机号</view>
             </view>
           </view>
           <view

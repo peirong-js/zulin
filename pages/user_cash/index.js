@@ -26,7 +26,7 @@ Page({
     currentTab: 0,
     index: 0,
     array: [],//提现银行
-    minPrice:0.00,//最低提现金额
+    commissionCount:0.00,//最低提现金额
     userInfo:[],
     isClone:false
   },
@@ -45,7 +45,7 @@ Page({
     extractBank().then(res=>{
       var array = res.data.extractBank;
       array.unshift("请选择银行");
-      that.setData({ array: array, minPrice: res.data.minPrice });
+      that.setData({ array: array, commissionCount: res.data.commissionCount });
     });
   },
   /**
@@ -64,8 +64,7 @@ Page({
     this.setData({ index: e.detail.value });
   },
   subCash: function (e) {
-    var formId = e.detail.formId, that = this, value = e.detail.value;
-    setFormId(formId);
+    let that = this, value = e.detail.value;
     if (that.data.currentTab == 0){//银行卡
       if (value.name.length == 0) return app.Tips({title:'请填写持卡人姓名'});
       if (value.cardnum.length == 0) return app.Tips({title:'请填写卡号'});
@@ -82,7 +81,7 @@ Page({
       value.alipay_code = value.name;
     }
     if (value.money.length == 0) return app.Tips({title:'请填写提现金额'});
-    if (value.money < that.data.minPrice) return app.Tips({title:'提现金额不能低于' + that.data.minPrice});
+    if (Number(value.money) > Number(that.data.commissionCount)) return app.Tips({ title: '提现金额不能大于' + that.data.commissionCount});
     extractCash(value).then(res=>{
       that.getUserInfo();
       return app.Tips({ title: res.msg, icon: 'success' });

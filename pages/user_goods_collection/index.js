@@ -49,11 +49,6 @@ Page({
       var collectProductList = res.data;
       var loadend = collectProductList.length < that.data.limit;
       console.log(collectProductList.length);
-      for(let x=0;x<collectProductList.length;x++){
-        if(collectProductList[x].store_name.length>17){
-          collectProductList[x].store_name=collectProductList[x].store_name.substring(0,17)+"..."
-        }
-      }
       that.data.collectProductList = app.SplitArray(collectProductList, that.data.collectProductList);
       that.setData({
         collectProductList: that.data.collectProductList,
