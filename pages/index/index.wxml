@@ -123,7 +123,6 @@
              <view class='name line1'>推荐</view>
              <!-- <view class='line1'>{{bastInfo}}</view> -->
           </view>
-          <navigator class='more' hover-class="none" url='/pages/first-new-product/index?type=1'>更多<text class='iconfont icon-jiantou'></text></navigator>
        </view>
        <!-- <view class='boutique' wx:if="{{bastBanner.length}}">
             <swiper  autoplay="true"  indicator-dots="true"

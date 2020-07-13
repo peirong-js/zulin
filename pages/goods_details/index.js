@@ -176,32 +176,6 @@ goActivity: function (e) {
       wx.navigateTo({ url: `/pages/goods_details/index?id=${item.id}` });
     }
   },
-
-  //获取用户当前位置
-  get_location:function(){
-    let that = this;
-    wx.getLocation({
-      type: 'gcj02',
-      success(res) {
-        console.log(res)
-        that.setData({
-          user_position_latitude:res.latitude,
-          user_position_longitude:res.longitude,
-        })
-        /* that.getDistance(res.latitude,res.longitude,"22.95631","113.565985") */
-        that.getDistance(res.latitude,res.longitude,"22.94631","113.665985")
-      },
-      complete(e) {
-        console.log(e)
-        if (e.errMsg == 'getLocation:fail auth deny') {
-          wx.showToast({
-            icon: 'none',
-            title: '您取消了定位,地图功能将受影响！！！',
-          });
-        }
-      }
-    });
-  },
   
     /*
  * 跳转门店列表
@@ -260,33 +234,6 @@ goActivity: function (e) {
     });
   },
 
-  //计算位置距离
-  getDistance: function(lat1, lng1, lat2, lng2) {
-    lat1 = lat1 || 0;
-    lng1 = lng1 || 0;
-    lat2 = lat2 || 0;
-    lng2 = lng2 || 0;
-  
-    var rad1 = lat1 * Math.PI / 180.0;
-    var rad2 = lat2 * Math.PI / 180.0;
-    var a = rad1 - rad2;
-    var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
-    var r = 6378137;
-    var distance = r * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(rad1) * Math.cos(rad2) * Math.pow(Math.sin(b / 2), 2)));
-    console.log(distance)
-    let distanceKm = `${(distance/1000).toFixed(2)}`;//转换成km
-    this.setData({
-      distanceKm:distanceKm
-    })
-    if(this.data.distanceKm>10){
-      wx.showToast({
-        title: '距离配送点大于10千米，超出配送范围',
-        icon: 'none',
-        duration: 3000
-      })
-     }
-    return distance;
-  },
 
 
   /**
@@ -400,8 +347,6 @@ goActivity: function (e) {
     //记录推广人uid
     if (options.spid) app.globalData.spid=options.spid;
     this.getGoodsDetails();
-    //定位距离
-    this.get_location();
     this.getList();
   },
   setClientHeight:function(){

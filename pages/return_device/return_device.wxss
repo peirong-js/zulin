@@ -1,0 +1,41 @@
+.inp_box{
+  margin: 15rpx 20rpx;
+  height: 60rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.inp{
+  height: 60rpx;
+  width: 550rpx;
+  background-color: #fff;
+  border-radius: 6rpx;
+  padding-left:20rpx;
+}
+
+.area_box{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 15rpx 20rpx;
+}
+
+.area{
+  width: 96%;
+  min-height: 160rpx;
+  margin-top: 15rpx;
+  padding: 15rpx;
+}
+
+.btn_submit{
+    height: 100rpx;
+    margin: 100rpx 100rpx;
+    background-color: #00a1e9;
+    border-radius: 50rpx;
+    color: #fff;
+    line-height: 100rpx;
+    text-align: center;
+    font-size: 32rpx;
+}
+

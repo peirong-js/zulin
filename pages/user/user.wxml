@@ -35,9 +35,11 @@
             <view class='num'>{{userInfo.couponCount || 0}}</view>
          </view>
       </view>
+
+      <!-- 租用状态 -->
       <view class='myOrder'>
         <view class='title acea-row row-between-wrapper'>
-           <view>我的订单</view>
+           <view>租用订单</view>
            <view class='allOrder' data-url='/pages/order_list/index' bindtap='goPages'>全部订单<text class='iconfont icon-jiantou'></text></view>
         </view>
         <view class='orderState acea-row row-middle'>
@@ -62,6 +64,58 @@
               </view>
               <view>待收货</view>
            </view>
+            <!-- <view class='item' data-url='/pages/order_list/index?status=3' bindtap='goPages'>
+              <view class='pictrue'>
+              <image src='/images/dpj.png'></image>
+              <text class="order-status-num" wx:if="{{orderStatusNum.evaluated_count > 0}}">{{ orderStatusNum.evaluated_count }}</text>
+              </view>
+              <view>待评价</view>
+           </view> -->
+            <view class='item' data-url='/pages/user_return_list/index' bindtap='goPages'>
+              <view class='pictrue'>
+              <image src='/images/sh.png'></image>
+              <text class="order-status-num" wx:if="{{orderStatusNum.refund_count > 0}}">{{ orderStatusNum.refund_count }}</text>
+              </view>
+              <view>租赁中</view>
+            </view>
+            <view class='item' data-url='/pages/return_device/return_device' bindtap='goPages'>
+              <view class='pictrue'>
+              <image src='/images/sh.png'></image>
+              <text class="order-status-num" wx:if="{{orderStatusNum.refund_count > 0}}">{{ orderStatusNum.refund_count }}</text>
+              </view>
+              <view>归 还</view>
+            </view>
+        </view>
+      </view>
+
+      <!-- 归还状态 -->
+      <view class='myOrder'>
+        <view class='title acea-row row-between-wrapper'>
+           <view>归还订单</view>
+           <view class='allOrder' data-url='/pages/order_list/index' bindtap='goPages'>全部订单<text class='iconfont icon-jiantou'></text></view>
+        </view>
+        <view class='orderState acea-row row-middle'>
+           <view class='item' data-url='/pages/order_list/index?status=0' bindtap='goPages'>
+              <view class='pictrue'>
+                <image src='/images/dfk.png'></image>
+                <text class="order-status-num" wx:if="{{orderStatusNum.unpaid_count > 0}}">{{ orderStatusNum.unpaid_count }}</text>
+              </view>
+              <view>已发货</view>
+           </view>
+            <view class='item' data-url='/pages/order_list/index?status=1' bindtap='goPages'>
+              <view class='pictrue'>
+                <image src='/images/dfh.png'></image>
+                <text class="order-status-num" wx:if="{{orderStatusNum.unshipped_count > 0}}">{{ orderStatusNum.unshipped_count }}</text>
+              </view>
+              <view>已接收</view>
+           </view>
+            <view class='item' data-url='/pages/order_list/index?status=2' bindtap='goPages'>
+              <view class='pictrue'>
+              <image src='/images/dsh.png'></image>
+              <text class="order-status-num" wx:if="{{orderStatusNum.received_count > 0}}">{{ orderStatusNum.received_count }}</text>
+              </view>
+              <view>审核中</view>
+           </view>
             <view class='item' data-url='/pages/order_list/index?status=3' bindtap='goPages'>
               <view class='pictrue'>
               <image src='/images/dpj.png'></image>
@@ -74,10 +128,12 @@
               <image src='/images/sh.png'></image>
               <text class="order-status-num" wx:if="{{orderStatusNum.refund_count > 0}}">{{ orderStatusNum.refund_count }}</text>
               </view>
-              <view>售后/退款</view>
+              <view>已完成</view>
            </view>
         </view>
       </view>
+
+
       <view class='myService'>
          <view class='title acea-row row-middle'>我的服务</view>
          <view class='serviceList acea-row row-middle'>

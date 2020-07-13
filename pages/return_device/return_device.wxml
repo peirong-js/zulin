@@ -1,0 +1,47 @@
+<navbar is="components/navbar/index" parameter='{{parameter}}'></navbar>
+<form bindsubmit="submit">
+  <view class="inp_box">
+    <text>订单号：</text>
+    <input placeholder="请输入订单号" class="inp" name="order_id"></input>
+  </view>
+
+  <view class="inp_box">
+    <text>设备编号：</text>
+    <input placeholder="请输入设备编号" class="inp" name="device_id"></input>
+  </view>
+
+  <view class="inp_box">
+    <text>产品名称：</text>
+    <input placeholder="请输入产品名称" class="inp" name="shop_name"></input>
+  </view>
+
+  <view class="inp_box">
+    <text>归还时间：</text>
+    <input placeholder="请输入归还时间" class="inp" name="return_time"></input>
+  </view>
+
+  <view class="inp_box">
+    <text>快递单号：</text>
+    <input placeholder="请输入快递单号" class="inp" name="express_id"></input>
+  </view>
+
+  <view class="inp_box">
+    <text>快递公司：</text>
+    <input placeholder="请输入快递公司" class="inp" name="express_company"></input>
+  </view>
+
+  <view class="area_box">
+    <text>租用配置：</text>
+    <textarea placeholder="请输入租用配置" class="inp area" name="configure"></textarea>
+  </view>
+
+  <view class="area_box">
+    <text>备注：</text>
+    <textarea placeholder="备注" class="inp area" name="mark"></textarea>
+  </view>
+
+  <button form-type="submit" class="btn_submit">提 交</button>
+
+
+
+</form>
