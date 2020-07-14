@@ -1,6 +1,6 @@
 module.exports = {
   // 请求域名 格式： https://您的域名
-  HTTP_REQUEST_URL:'https://shop.fb88it.cn',
+  HTTP_REQUEST_URL:'https://zulin.fb88it.cn',
   // Socket链接 暂不做配置
   WSS_SERVER_URL:'',
 

@@ -35,9 +35,9 @@
     </view>
     <view class='introduce'>{{storeInfo.store_name}}</view>
     <view class='label acea-row row-between-wrapper'>
-      <view>原价:￥{{storeInfo.ot_price}}</view>
+      <!-- <view>原价:￥{{storeInfo.ot_price}}</view> -->
       <view>库存:{{storeInfo.stock}}{{storeInfo.unit_name}}</view>
-      <view>销量:{{storeInfo.fsales}}{{storeInfo.unit_name}}</view>
+      <view>租赁:{{storeInfo.fsales}}{{storeInfo.unit_name}}</view>
     </view>
     <view class='coupon acea-row row-between-wrapper' wx:if="{{storeInfo.give_integral > 0}}">
       <view class='hide line1 acea-row'>
@@ -171,7 +171,7 @@
         <button class='joinCart bnts' formType="submit">加入购物车</button>
       </form>
       <form bindsubmit="goBuy" report-submit='true'>
-        <button class='buy bnts' formType="submit">立即购买</button>
+        <button class='buy bnts' formType="submit">立即租赁</button>
       </form>
     </view>
   </view>
