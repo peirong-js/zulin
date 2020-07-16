@@ -32,8 +32,55 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.now_date();
   },
+
+  //获取当前日期
+  now_date:function(){
+    /* let now = new Date();
+    let year = now.getFullYear(); //得到年份
+    let month = (now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1);//得到月份
+    let date = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();//得到日期
+    //时  
+    let h = date.getHours();  
+    //分  
+    let m = date.getMinutes();  
+    //秒  
+    let s = date.getSeconds(); 
+    let today_date = year+'-'+month+'-'+date+' '+h+':'+m+':'+s;
+    this.setData({
+      today_date:today_date,
+    }) */
+     //获取当前时间戳  
+    let timestamp = Date.parse(new Date());  
+    timestamp = timestamp / 1000;  
+    console.log("当前时间戳为：" + timestamp); 
+    
+    //获取当前时间  
+    let n = timestamp * 1000;  
+    let date = new Date(n);  
+    //年  
+    let Y = date.getFullYear();  
+    //月  
+    let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);  
+    //日  
+    let D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();  
+    //时  
+    let h = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();  
+    //分  
+    let m = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();  
+    //秒  
+    let s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();  
+
+    console.log("当前时间：" +Y+'-'+M+'-'+D+' '+h+":"+m+":"+s);  
+    let today_date = Y+'-'+M+'-'+D+' '+h+":"+m+":"+s
+    this.setData({
+      today_date:today_date,
+      timestamp:timestamp
+    })
+   
+  },
+
 
   /**
    * 生命周期函数--监听页面隐藏

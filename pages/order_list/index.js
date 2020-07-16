@@ -75,6 +75,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
+    if(options.type) this.setData({ order_type:options.type })
     if (options.status) this.setData({ orderStatus:options.status});
     this.setData({ 'parameter.return': options.is_return ? '0' : '1'});
   },

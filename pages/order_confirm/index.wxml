@@ -97,7 +97,7 @@
   </view>
   <view class='moneyList'>
     <view class='item acea-row row-between-wrapper'>
-      <view>商品总价：</view>
+      <view>预付款：</view>
       <view class='money'>￥{{priceGroup.totalPrice}}</view>
     </view>
     <view class='item acea-row row-between-wrapper' wx:if="{{coupon_price > 0}}">

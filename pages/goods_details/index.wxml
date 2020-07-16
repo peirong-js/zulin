@@ -175,7 +175,6 @@
       </form>
     </view>
   </view>
-  <shareRedPackets sharePacket="{{sharePacket}}" bind:listenerActionSheet="listenerActionSheet"></shareRedPackets>
 </view>
 <!-- 分享按钮 -->
 <action-sheet hidden="{{actionSheetHidden}}" bindchange="listenerActionSheet" class='pro-wrapper' hover-class='none'>

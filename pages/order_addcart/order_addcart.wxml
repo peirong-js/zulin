@@ -79,7 +79,7 @@
      <view class='money acea-row row-middle' wx:if='{{footerswitch==true}}'>
         <text class='font-color'>￥{{selectCountPrice}}</text>
         <form bindsubmit="subOrder" report-submit='true'>
-            <button class='placeOrder bg-color' formType="submit">立即下单</button>
+            <button class='placeOrder bg-color' formType="submit">立即租赁</button>
         </form>
      </view>
      <view class='button acea-row row-middle' wx:else>
