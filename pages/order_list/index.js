@@ -170,7 +170,10 @@ Page({
       page: that.data.page,
       limit: that.data.limit,
     }).then(res=>{
+      console.log(res.data);
       var list = res.data || [];
+      console.log(list)
+      console.log(typeof list)
       var loadend = list.length < that.data.limit;
       that.data.orderList = app.SplitArray(list, that.data.orderList);
       that.setData({
@@ -180,6 +183,7 @@ Page({
         loadTitle: loadend ? "没有更多了~~" : '加载更多',
         page: that.data.page + 1,
       });
+      console.log(that.data.orderList)
     }).catch(err=>{
       that.setData({ loading: false, loadTitle: "加载更多" });
     })

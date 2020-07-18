@@ -225,6 +225,7 @@ const getCodeLogin = function(successFn)
 * 合并数组
 */
 const SplitArray= function (list, sp) {
+  console.log(typeof list)
   if (typeof list != 'object') return [];
   if (sp === undefined) sp = [];
   for (var i = 0; i < list.length; i++) {
