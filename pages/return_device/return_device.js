@@ -1,4 +1,6 @@
 // pages/return_device/return_device.js
+const app = getApp();
+import { order_return} from '../../api/user.js';
 Page({
 
   /**
@@ -92,6 +94,9 @@ Page({
   //提交表单
   submit(e) {
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
+    order_return(e.detail.value).then(res=>{
+      console.log(res)
+    });
   },
 
   /**

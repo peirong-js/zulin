@@ -5,19 +5,10 @@
     <input placeholder="请输入订单号" class="inp" name="order_id"></input>
   </view>
 
-  <view class="inp_box">
-    <text>产品名称：</text>
-    <input placeholder="请输入产品名称" class="inp" name="shop_name"></input>
-  </view>
 
   <view class="inp_box">
     <text>归还时间：</text>
-    <input placeholder="请输入归还时间" class="inp" disabled="false" name="return_time" value="{{today_date}}"></input>
-  </view>
-
-  <view class="inp_box">
-    <text>快递单号：</text>
-    <input placeholder="请输入快递单号" class="inp" name="express_id"></input>
+    <input placeholder="请输入归还时间" class="inp" disabled="false" value="{{today_date}}"></input>
   </view>
 
   <view class="inp_box">
@@ -25,11 +16,14 @@
     <input placeholder="请输入快递公司" class="inp" name="express_company"></input>
   </view>
 
-  <view class="area_box">
-    <text>备注：</text>
-    <textarea placeholder="备注" class="inp area" name="mark"></textarea>
+  <view class="inp_box">
+    <text>快递单号：</text>
+    <input placeholder="请输入快递单号" class="inp" name="express_id"></input>
   </view>
-  <input disabled="false" name="return_timestamp" value="{{timestamp}}" hidden="true"></input>
+
+
+
+  <input disabled="false" name="return_time" value="{{timestamp}}" hidden="true"></input>
 
   <button form-type="submit" class="btn_submit">提 交</button>
 

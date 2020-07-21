@@ -15,7 +15,7 @@
 <block wx:if="{{order_type == 0}}">
 	<view class='nav acea-row row-around'>
 		<view class='item {{orderStatus==0 ? "on": ""}}' data-status="0" bindtap="statusClick">
-			<view>待付款</view>
+			<view>未付款</view>
 			<view class='num'>{{orderData.unpaid_count || 0}}</view>
 		</view>
 		<view class='item {{orderStatus==1 ? "on": ""}}' data-status="1" bindtap="statusClick">
@@ -32,7 +32,7 @@
 		</view> -->
 		<view class='item {{orderStatus==4 ? "on": ""}}' data-status="4" bindtap="statusClick">
 			<view>租赁中</view>
-			<view class='num'>{{orderData.complete_count || 0}}</view>
+			<view class='num'>{{orderData.zulin_count || 0}}</view>
 		</view>
 	</view>
 	<view class='list'>
@@ -87,20 +87,24 @@
 	<view class='nav acea-row row-around'>
 		<view class='item {{orderStatus==0 ? "on": ""}}' data-status="0" bindtap="statusClick">
 			<view>提交归还</view>
-			<view class='num'>{{orderData.unpaid_count || 0}}</view>
+			<view class='num'>{{orderData.return_count || 0}}</view>
 		</view>
 		<view class='item {{orderStatus==1 ? "on": ""}}' data-status="1" bindtap="statusClick">
 			<view>待审核</view>
-			<view class='num'>{{orderData.unshipped_count || 0}}</view>
+			<view class='num'>{{orderData.check_count || 0}}</view>
+		</view>
+		<view class='item {{orderStatus==3 ? "on": ""}}' data-status="3" bindtap="statusClick">
+			<view>待付款</view>
+			<view class='num'>{{orderData.nopay_count || 0}}</view>
 		</view>
 		<view class='item {{orderStatus==2 ? "on": ""}}' data-status="2" bindtap="statusClick">
 			<view>已完成</view>
-			<view class='num '>{{orderData.received_count || 0}}</view>
+			<view class='num '>{{orderData.complete_count || 0}}</view>
 		</view>
-		<view class='item {{orderStatus==3 ? "on": ""}}' data-status="3" bindtap="statusClick">
+		<!-- <view class='item {{orderStatus==3 ? "on": ""}}' data-status="3" bindtap="statusClick">
 			<view>待评价</view>
 			<view class='num'>{{orderData.evaluated_count || 0}}</view>
-		</view>
+		</view> -->
 		<!-- <view class='item {{orderStatus==4 ? "on": ""}}' data-status="4" bindtap="statusClick">
 			<view>已完成</view>
 			<view class='num'>{{orderData.complete_count || 0}}</view>

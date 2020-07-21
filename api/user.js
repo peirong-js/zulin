@@ -276,3 +276,11 @@ export function getBrokerageRank(q) {
 export function getRechargeApi() {
   return request.get('recharge/index')
 }
+
+/**
+ * 提交归还
+ * 
+*/
+export function order_return(data){
+  return request.post('order/return',data);
+}
