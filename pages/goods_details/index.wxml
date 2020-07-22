@@ -35,6 +35,9 @@
     </view>
     <view class='introduce'>{{storeInfo.store_name}}</view>
     <view class='label acea-row row-between-wrapper'>
+      <view style="color:#333;font-size:30rpx;font-weight:700">租赁方式 : 按天收租<text style="color:red;"> ￥5元</text></view>
+    </view>
+    <view class='label acea-row row-between-wrapper'>
       <!-- <view>原价:￥{{storeInfo.ot_price}}</view> -->
       <view>库存:{{storeInfo.stock}}{{storeInfo.unit_name}}</view>
       <view>租赁:{{storeInfo.fsales}}{{storeInfo.unit_name}}</view>

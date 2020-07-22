@@ -2,7 +2,7 @@
 <form bindsubmit="submit">
   <view class="inp_box">
     <text>订单号：</text>
-    <input placeholder="请输入订单号" class="inp" name="order_id"></input>
+    <input placeholder="请输入订单号" class="inp" name="order_id" disabled="false" value="{{order_id}}"></input>
   </view>
 
 

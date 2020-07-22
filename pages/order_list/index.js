@@ -148,6 +148,19 @@ Page({
       wx.hideLoading();
     })
   },
+
+  /**
+   * 页面跳转
+  */
+ goPages:function(e){
+   let that = this
+   console.log(e)
+   console.log(that.data.order_id)
+   let index =e.currentTarget.dataset.index
+    wx.navigateTo({
+      url: e.currentTarget.dataset.url+'?order_id='+that.data.order_id[index].order_id
+    })
+},
   /**
    * 切换类型
   */
@@ -171,6 +184,10 @@ Page({
       limit: that.data.limit,
     }).then(res=>{
       console.log(res.data);
+      console.log(res.data.order_id)
+      that.setData({
+        order_id:res.data
+      })
       var list = res.data || [];
       console.log(list)
       console.log(typeof list)
