@@ -99,6 +99,24 @@ Page({
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
     order_return(e.detail.value).then(res=>{
       console.log(res)
+      if(res.status == 200){
+        wx.showToast({
+          title: '提交成功！',
+          icon:'success',
+          duration:2000
+        })
+        setTimeout(function(){
+          wx.switchTab({
+            url: '../user/user',
+          })
+        },1000)
+      }else{
+        wx.showToast({
+          title:'提交失败',
+          icon:'none',
+          duration:2000
+        })
+      }
     });
   },
 

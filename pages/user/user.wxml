@@ -88,7 +88,7 @@
            <view class='allOrder' data-url='/pages/order_list/index?status=6&type=1' bindtap='goPages'>订单详情<text class='iconfont icon-jiantou'></text></view>
         </view>
         <view class='orderState acea-row row-middle'>
-           <view class='item'data-url='/pages/order_list/index?status=3&type=0' bindtap='goPages'>
+           <view class='item'data-url='/pages/order_list/index?status=5&type=0' bindtap='goPages'>
               <view class='pictrue'>
               <image src='/images/sh.png'></image>
               <text class="order-status-num" wx:if="{{orderStatusNum.refund_count > 0}}">{{ orderStatusNum.refund_count }}</text>
