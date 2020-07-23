@@ -85,7 +85,7 @@
       <view class='myOrder'>
         <view class='title acea-row row-between-wrapper'>
            <view>归还订单</view>
-           <view class='allOrder' data-url='/pages/order_list/index?status=4&type=1' bindtap='goPages'>订单详情<text class='iconfont icon-jiantou'></text></view>
+           <view class='allOrder' data-url='/pages/order_list/index?status=6&type=1' bindtap='goPages'>订单详情<text class='iconfont icon-jiantou'></text></view>
         </view>
         <view class='orderState acea-row row-middle'>
            <view class='item'data-url='/pages/order_list/index?status=3&type=0' bindtap='goPages'>
@@ -102,21 +102,21 @@
               </view>
               <view>已接收</view>
            </view> -->
-            <view class='item' data-url='/pages/order_list/index?status=4&type=1' bindtap='goPages'>
+            <view class='item' data-url='/pages/order_list/index?status=6&type=1' bindtap='goPages'>
               <view class='pictrue'>
               <image src='/images/dsh.png'></image>
               <text class="order-status-num" wx:if="{{orderStatusNum.check_count > 0}}">{{ orderStatusNum.check_count }}</text>
               </view>
               <view>待审核</view>
            </view>
-           <view class='item' data-url='/pages/order_list/index?status=5&type=1' bindtap='goPages'>
+           <view class='item' data-url='/pages/order_list/index?status=7&type=1' bindtap='goPages'>
               <view class='pictrue'>
               <image src='/images/dpj.png'></image>
               <text class="order-status-num" wx:if="{{orderStatusNum.nopay_count > 0}}">{{ orderStatusNum.nopay_count }}</text>
               </view>
               <view>待付款</view>
            </view>
-           <view class='item' data-url='/pages/order_list/index?status=6&type=1' bindtap='goPages'>
+           <view class='item' data-url='/pages/order_list/index?status=4&type=1' bindtap='goPages'>
               <view class='pictrue'>
               <image src='/images/sh.png'></image>
               <text class="order-status-num" wx:if="{{orderStatusNum.refund_count > 0}}">{{ orderStatusNum.refund_count }}</text>
