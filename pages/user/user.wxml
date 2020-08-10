@@ -143,10 +143,10 @@
               <view class='pictrue'><image src='/images/dzxx.png'></image></view>
               <view>地址管理</view>
             </button>
-            <button class='item' bindtap='goPages' data-url='/pages/user_sgin/index' hover-class='none'>
+            <!-- <button class='item' bindtap='goPages' data-url='/pages/user_sgin/index' hover-class='none'>
               <view class='pictrue'><image src='/images/qd2.png'></image></view>
               <view>签到</view>
-            </button>
+            </button> -->
             <button class='item' bindtap='goPages' data-url='/pages/user_coupon/index' hover-class='none'>
               <view class='pictrue'><image src='/images/yhq2.png'></image></view>
               <view>优惠券</view>

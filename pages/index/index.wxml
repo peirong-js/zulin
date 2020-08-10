@@ -30,11 +30,10 @@
         </navigator>
       </block> 
     </view> -->
-    <view class='nav acea-row'>
+   <!--  <view class='nav acea-row'>
       <navigator class='item' url='/pages/user_money/index' hover-class='none'>
           <view class='pictrue'><image src='/images/fl.png'></image></view>
           <view>我的账户</view>
-          <!-- <view>{{address}}</view> -->
       </navigator>
       <navigator class='item' url='/pages/user_goods_collection/index' hover-class='none'>
           <view class='pictrue'><image src='/images/sc.png'></image></view>
@@ -48,7 +47,7 @@
           <view class='pictrue'><image src='/images/qd.png'></image></view>
           <view>每日签到</view>
       </navigator>
-    </view>
+    </view> -->
     <!-- <view class='news acea-row row-between-wrapper' wx:if="{{itemNew.length}}">
        <view class='pictrue'><image src='/images/news.png'></image></view>
        <view class='swiperTxt'>
